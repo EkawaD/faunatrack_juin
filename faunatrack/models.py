@@ -36,12 +36,13 @@ class Observation(models.Model):
 class Projet(models.Model):
     titre = models.CharField(max_length=255)
     description = models.TextField(blank=True, default=None, null=True)
-    observations = models.ManyToManyField(Observation, related_name="projets")
-    slug = models.SlugField(blank=True) # = CharField avec validators (pas d'espace, pas de char spéciaux)
+    observations = models.ManyToManyField(Observation, related_name="projets", blank=True, default=None)
+    slug = models.SlugField(blank=True, editable=False) # = CharField avec validators (pas d'espace, pas de char spéciaux)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.titre)
         super().save(*args, **kwargs)
+
 
     def __str__(self):
         return self.titre

@@ -30,6 +30,7 @@ class ScientifiqueAdmin(admin.ModelAdmin):
 class ProjetAdmin(admin.ModelAdmin):
     list_display = ["__str__", "titre"]
     filter_horizontal = ['observations', ]
+    exclude = ["slug"]
 
 
 # python manage.py createsuperuser
