@@ -40,6 +40,6 @@ def home_page(request: HttpRequest):
 
 class ProjetList(ListView):
     model = Projet
-    queryset = Projet.objects.filter(titre__icontains="premier")
+    # queryset = Projet.objects.filter(titre__icontains="premier")
     template_name = "projet_list.html"
 

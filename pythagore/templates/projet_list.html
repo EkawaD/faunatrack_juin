@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% comment %} un button pour ajouter un projet {% endcomment %}
+<a class="text-green-500" href="{% url 'projet_create' %}"> Ajouter un projet </a>
 {% for projet in object_list %}
     <p> {{ projet.titre }} </p>
+    <a class="text-blue-500" href="{% url 'projet_update' pk=projet.pk %}"> Editer un projet </a>
+    <a class="text-red-500" href="{% url 'projet_delete' pk=projet.pk %}"> Supprimer un projet </a>
+
 {% endfor %}
 {% endblock %}
