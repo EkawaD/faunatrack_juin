@@ -21,6 +21,7 @@
                 <div class="flex gap-4">
                     
                     {% if request.user.is_authenticated %}
+                    <a class="text-gray-800 hover:text-gray-600" href="{% url 'obs_list' %}">Les observations</a>
                     <a class="text-gray-800 hover:text-gray-600" href="{% url 'projet_list' %}">Les projets</a>
                     <a class="text-gray-800 hover:text-gray-600" href="{% url 'admin:index' %}">Admin</a>
                         <form method="post" action="{% url 'logout' %}">

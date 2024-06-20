@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% comment %} un button pour ajouter un projet {% endcomment %}
+<a class="text-green-500" href="{% url 'obs_create' %}"> Ajouter une observation </a>
+{% for obs in object_list %}
+    <p> {{ obs }} </p>
+{% endfor %}
+{% endblock %}

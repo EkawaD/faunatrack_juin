@@ -2,9 +2,9 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.http import HttpResponse, HttpRequest
-from faunatrack.models import Projet
+from faunatrack.models import Projet, Observation
 from django.urls import reverse_lazy
-from faunatrack.forms import ProjetForm
+from faunatrack.forms import ProjetForm, ObsForm
 
 class ProjetCreate(CreateView):
     model = Projet 
@@ -43,3 +43,24 @@ class ProjetList(ListView):
     # queryset = Projet.objects.filter(titre__icontains="premier")
     template_name = "projet_list.html"
 
+
+class ObsList(ListView):
+    model = Observation
+    template_name = "obs_list.html"
+
+class ObsCreate(CreateView):
+    model = Observation 
+    template_name = "obs_create.html"
+    form_class = ObsForm
+    success_url = reverse_lazy('obs_list') 
+
+class ObsUpdate(UpdateView):
+    model = Observation 
+    template_name = "obs_update.html"
+    form_class = ObsForm
+    success_url = reverse_lazy('obs_list') 
+
+class ObsDelete(DeleteView):
+    model = Observation 
+    template_name = "obs_delete.html"
+    success_url = reverse_lazy('obs_list') 

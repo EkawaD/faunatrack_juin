@@ -7,6 +7,5 @@
     <p> {{ projet.titre }} </p>
     <a class="text-blue-500" href="{% url 'projet_update' pk=projet.pk %}"> Editer un projet </a>
     <a class="text-red-500" href="{% url 'projet_delete' pk=projet.pk %}"> Supprimer un projet </a>
-
 {% endfor %}
 {% endblock %}
