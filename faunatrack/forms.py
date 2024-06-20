@@ -9,10 +9,21 @@ class ProjetForm(forms.ModelForm):
         fields = ["titre", "description", "observations"] # .. et les champs que l'on veut
 
 class ObsForm(forms.ModelForm):
+    quantite = forms.IntegerField(
+        label="Quantité",
+        help_text="Nombre d'individus observés",
+        min_value=1,
+        max_value=1000 )
     class Meta:
         model = Observation
         fields = '__all__' # Tout les champs de mon model sont dans mon formulaire
-
+        widgets = {
+            "date": forms.widgets.DateInput(
+                attrs={
+                    'type': 'date'
+                }
+            )
+        }
 
     def clean_latitude(self):
         ''' 
@@ -26,7 +37,7 @@ class ObsForm(forms.ModelForm):
     
     def clean_longitude(self):
         ''' Exemple ou on ajoute une validation sur le formulaire UNIQUEMENT (pas dans le model)'''
-        latitude = self.cleaned_data.get('longitude')
-        if latitude > 150:
+        longitude = self.cleaned_data.get('longitude')
+        if longitude > 150:
             raise forms.ValidationError("Vous êtes un grand malade !!")
-        return latitude
+        return longitude

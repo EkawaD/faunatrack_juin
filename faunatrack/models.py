@@ -3,9 +3,10 @@ from django.contrib.auth.models import User
 from django.utils.text import slugify
 from faunatrack.validators import validate_latitude, validate_longitude
 from django.core.validators import MinValueValidator
+from django.utils import timezone
 
 class Scientifique(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE) # Que se passe t il pour le SCIENTIFIQUE si un USER est supprimé 
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="scientifique") # Que se passe t il pour le SCIENTIFIQUE si un USER est supprimé 
     universite = models.CharField(max_length=255)
 
     def __str__(self):
@@ -17,16 +18,15 @@ class Espece(models.Model):
         DANGER = "danger"
         SAIN = "hors de danger"
 
-
     nom = models.CharField(max_length=255, unique=True)
     status = models.CharField(choices=StatusChoice.choices, default=StatusChoice.SAIN, max_length=255)
 
     def __str__(self):
         return self.nom
-    
+
 
 class Observation(models.Model):
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(default=timezone.now)
     quantite = models.IntegerField(default=1, validators=[MinValueValidator(1)])
     notes = models.TextField(blank=True, null=True, default=None)
     photo = models.ImageField(upload_to="obs_photos/", blank=True, null=True)
@@ -52,6 +52,8 @@ class Projet(models.Model):
 
     def __str__(self):
         return self.titre
+
+
 
 
 # class ObservationPhotos:

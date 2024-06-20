@@ -1,11 +1,23 @@
 from django.contrib import admin
 from faunatrack.models import Espece, Observation, Scientifique, Projet
+from import_export.resources import ModelResource
+from import_export.admin import ImportExportModelAdmin
+# from django.core.management import call_command
 
-# Register your models here.
+class EspeceRessource(ModelResource):
+    class Meta:
+        model = Espece
+
+
+# admin.py permet d'enregistrer nos modèles dans l'interface admin
+# On utilise un décorateur mais on peut aussi faire
+# admin.site.register(Espece, EspeceAdmin)
 @admin.register(Espece)
-class EspeceAdmin(admin.ModelAdmin):
-   # list_display = ("nom",) # ça c'est juste => tuple (2 entrées) /!\ si 1 entrée ne pas oublier la virgule
+class EspeceAdmin(ImportExportModelAdmin):
+   # list_display = ("nom",) # On peut utilise un tuple, mais ne pas oublier la virgule quand une seule valeur
     list_display = ["__str__", "status"]
+    resource_class = EspeceRessource
+    
 
 @admin.register(Observation)
 class ObservationAdmin(admin.ModelAdmin):
