@@ -1,0 +1,6 @@
+<a class="text-green-500" href="{% url 'obs_create' %}"> Ajouter une observation </a>
+{% for obs in object_list %}
+    <p> {{ obs }} </p>
+    <a class="text-blue-500" href="{% url 'obs_update' pk=obs.pk %}"> Editer un obs </a>
+    <a class="text-red-500" href="{% url 'obs_delete' pk=obs.pk %}"> Supprimer un obs </a>
+{% endfor %}
