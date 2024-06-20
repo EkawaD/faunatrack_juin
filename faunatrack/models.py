@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from faunatrack.validators import validate_latitude, validate_longitude
+from django.core.validators import MinValueValidator
 
 class Scientifique(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE) # Que se passe t il pour le SCIENTIFIQUE si un USER est supprimé 
@@ -22,16 +24,20 @@ class Espece(models.Model):
     def __str__(self):
         return self.nom
     
+
 class Observation(models.Model):
     date = models.DateField(auto_now_add=True)
-    quantite = models.IntegerField(default=1)
+    quantite = models.IntegerField(default=1, validators=[MinValueValidator(1)])
     notes = models.TextField(blank=True, null=True, default=None)
     photo = models.ImageField(upload_to="obs_photos/", blank=True, null=True)
     espece =  models.ForeignKey(Espece, related_name="observations", on_delete=models.PROTECT) # Que se passe t il pour le OBSERVATION si un ESPECE est supprimé 
     scientifique = models.ForeignKey(Scientifique, related_name="observations", on_delete=models.PROTECT) # Que se passe t il pour le OBSERVATION si un SCIENTIFIQUE est supprimé 
+    lattitude = models.DecimalField(max_digits=9, decimal_places=6, validators=[validate_latitude], default=0)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, validators=[validate_longitude], default=0)
 
     def __str__(self):
         return f"{self.quantite} {self.espece} observé par {self.scientifique}"
+    
     
 class Projet(models.Model):
     titre = models.CharField(max_length=255)
