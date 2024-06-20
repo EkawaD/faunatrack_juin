@@ -42,7 +42,7 @@ class Projet(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.titre)
         super().save(*args, **kwargs)
-
+       
 
     def __str__(self):
         return self.titre
